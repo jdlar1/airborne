@@ -111,8 +111,6 @@ def set_interval(func, sec):
 st.sidebar.title('About')
 st.sidebar.image(Image.open(os.path.join('assets', 'airplane.jpg')),
                  use_column_width=True,  caption='FAC-Caravan airborne measurenment platform')
-st.sidebar.image(Image.open(os.path.join('assets', 'fuerza-aerea.jpg')),
-                 use_column_width=True,  caption='Fuerza Aérea Colombiana logo')
 
 
 # --------------------------SIDEBAR--------------------------
