@@ -1,4 +1,4 @@
-FROM python:3.7.8-slim
+FROM python:3.8
 
 # remember to expose the port your app'll be exposed on.
 EXPOSE 8080
