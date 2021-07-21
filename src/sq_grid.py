@@ -1,8 +1,40 @@
 import os
+from typing import Tuple
 
 import numpy as np
 import pandas as pd
 import plotly.express as px
+
+
+def find_limits(dataframe: pd.DataFrame, side: float = 0.01, time_div=15) -> Tuple[np.ndarray, np.ndarray]:
+    """Finds lats and lots bounds arrays given a square side for the grid definition
+
+    Args:
+        dataframe (pd.DataFrame): Dataframe containing columns lat and lon.
+        side (float, optional): Square grid side in decimal degrees. Defaults to 0.01.
+
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: Tuple with lats_bnds and lots_bnds
+    """
+
+    lots, lats = tuple(np.split(dataframe[['lot', 'lat']].values.T, 2, 0))
+
+    x_min_max = np.array([lats.min(), lats.max()])
+    y_min_max = np.array([lots.min(), lots.max()])
+
+    n_sq_x = np.ceil((x_min_max[1] - x_min_max[0]) / side).astype(int)
+    n_sq_y = np.ceil((y_min_max[1] - y_min_max[0]) / side).astype(int)
+
+    x_upper_diff = n_sq_x * side - x_min_max[1] + x_min_max[0]
+    y_upper_diff = n_sq_y * side - y_min_max[1] + y_min_max[0]
+
+    c_x = x_min_max[0] - x_upper_diff / 2
+    c_y = y_min_max[0] - y_upper_diff / 2
+
+    lat_bnds = np.linspace(c_x, c_x + n_sq_x * side, n_sq_x + 1)
+    lot_bnds = np.linspace(c_y, c_y + n_sq_y * side, n_sq_y + 1)
+
+    return lat_bnds, lot_bnds
 
 
 def _get_number_sides(dataframe: pd.DataFrame, tile_side: float = 0.1):
@@ -190,12 +222,11 @@ def square_grid(
     if show_original_data:
         original_fig = px.scatter_mapbox(dataframe, lat="lat", lon="lot", opacity=0.5,
                                          color=dataframe[color], color_continuous_scale="Viridis")
-        
+
         original_fig.data[0].hoverinfo = "skip"
         original_fig.data[0].hovertemplate = None
 
         _fig.add_trace(original_fig.data[0])
-    
 
     return _fig, df
 

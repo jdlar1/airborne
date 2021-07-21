@@ -55,10 +55,8 @@ v_df = pd.DataFrame(
     {'verbose': _variable_verb, 'unit': _variable_unit}, index=variables)
 
 # -----------------------------MAIN------------------------------
-st.set_page_config(
-    initial_sidebar_state='expanded',
-    layout='wide'
-)
+
+
 
 st.title('Airborne measurement visualization tool')
 st.image(Image.open(os.path.join('assets', 'flag.webp')), width=40)
@@ -136,7 +134,6 @@ if len(dataset_path_selected) > 0:
 
     figs_title = 'Dataset Selected plot'
 
-
 @st.cache
 def get_points_fig(dataframe, variable):
     fig = px.scatter_mapbox(dataframe, lat="lat", lon="lot", opacity=0.5,
@@ -147,6 +144,7 @@ def get_points_fig(dataframe, variable):
                       margin={"r": 0, "t": 30, "l": 0, "b": 15})
     fig.update_layout(title_text=figs_title, title_x=0.45)
     return fig
+
 
 
 @st.cache
