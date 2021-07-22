@@ -341,6 +341,6 @@ if len(dataset_path_selected) > 0:
     with col3:
 
         if secondary_grid:
-            st.subheader('Grid data')
+            st.subheader('Grid data product for assimilation with LOTOS-EUROS')
             st.markdown(get_table_download_link(
                 _df, 'grid.csv', 'download (csv)'), unsafe_allow_html=True)
