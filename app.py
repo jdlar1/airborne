@@ -58,7 +58,7 @@ v_df = pd.DataFrame(
 
 
 
-st.title('Airborne measurement visualization tool')
+st.title('Airborne measurement visualization tool cloud')
 st.image(Image.open(os.path.join('assets', 'flag.webp')), width=40)
 
 # --------------------------SIDEBAR--------------------------
